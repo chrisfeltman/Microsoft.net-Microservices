@@ -122,23 +122,43 @@ namespace CocktailService
             newCocktail.Id = maxId.ToString();
             CocktailsList.Add(newCocktail);
 
-            Set201Created();
+            SetResponseCode(HttpStatusCode.Created);
             return newCocktail;
         }
 
-        private static void Set201Created()
+        [OperationContract]
+        [WebInvoke(UriTemplate = "cocktail/{id}", Method = "DELETE")]
+        public void DeleteCocktail(string id)
+        {
+            
+
+            var cocktailToRemove = CocktailsList.FirstOrDefault(x => id == x.Id);
+            if (cocktailToRemove == null)
+            {
+                SetResponseCode(HttpStatusCode.NotFound);
+                return;
+
+            }
+
+            // maybe check for user authorization here? 
+
+            CocktailsList.Remove(cocktailToRemove);
+            SetResponseCode(HttpStatusCode.NoContent);
+
+
+        }
+
+        private static void SetResponseCode(HttpStatusCode statusCode)
         {
             var ctx = WebOperationContext.Current;
             Debug.Assert(ctx != null);
-            ctx.OutgoingResponse.StatusCode = HttpStatusCode.Created;
+            ctx.OutgoingResponse.StatusCode = statusCode;
         }
         
         
     }
     
  
-
-
     [DataContract]
     public class Cocktail
     {
