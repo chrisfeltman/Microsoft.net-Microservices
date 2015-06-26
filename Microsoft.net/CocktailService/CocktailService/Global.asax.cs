@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Security;
 using System.Web.SessionState;
+using CocktailService.Entities;
 using Microsoft.Win32.SafeHandles;
 
 namespace CocktailService

@@ -60,7 +60,8 @@
     <Compile Include="CocktailService.svc.cs">
       <DependentUpon>CocktailService.svc</DependentUpon>
     </Compile>
-    <Compile Include="Entities.cs" />
+    <Compile Include="Entities\Entities.cs" />
+    <Compile Include="Entities\Ingredient.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

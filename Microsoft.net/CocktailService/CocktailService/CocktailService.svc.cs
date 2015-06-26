@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using CocktailService.Entities;
 
 
 namespace CocktailService
