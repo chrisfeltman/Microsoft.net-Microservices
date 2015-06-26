@@ -32,8 +32,28 @@ namespace CocktailService
             }
             catch
             {
-                throw new WebFaultException<string>(string.Format("No cocktail with id {0}", id), HttpStatusCode.NotFound);
+                throw new WebFaultException<string>(string.Format("No cocktail with id {0}", id), HttpStatusCode.NotFound);  // test case
             }
+        }
+
+        [OperationContract]
+        [WebGet(UriTemplate = "cocktail?name={name}")]
+        public Cocktail GetCocktailByName(string name)
+        {
+            if (name == null)
+            {
+               throw new WebFaultException<string>("Name parameter must be supplied", HttpStatusCode.BadRequest);   // test case
+            }
+            
+        
+            var result = Global.CocktailsList.FirstOrDefault(x => name.Equals(x.Name, StringComparison.OrdinalIgnoreCase));
+            if(result == null)
+            {
+                throw new WebFaultException<string>(string.Format("No cocktail found with name \"{0}\"", name), HttpStatusCode.NotFound);  // test case
+            }
+
+            return result;
+
         }
 
 
@@ -41,7 +61,7 @@ namespace CocktailService
         [WebInvoke(UriTemplate = "cocktail/", Method = "POST")]
         public Cocktail AddCocktail(Cocktail newCocktail)
         {
-            var maxId = Global.CocktailsList.Max(x => int.Parse(x.Id)) + 1;
+            var maxId = Global.CocktailsList.Max(x => int.Parse(x.Id)) + 1;   // test case 
             newCocktail.Id = maxId.ToString();
             Global.CocktailsList.Add(newCocktail);
 
@@ -56,16 +76,17 @@ namespace CocktailService
 
 
             var cocktailToRemove = Global.CocktailsList.FirstOrDefault(x => id == x.Id);
+
             if (cocktailToRemove == null)
             {
-                SetResponseCode(HttpStatusCode.NotFound);
+                SetResponseCode(HttpStatusCode.NotFound); // test case
                 return;
 
             }
 
             // maybe check for user authorization here? 
 
-            Global.CocktailsList.Remove(cocktailToRemove);
+            Global.CocktailsList.Remove(cocktailToRemove);   // test case
             SetResponseCode(HttpStatusCode.NoContent);
 
 
