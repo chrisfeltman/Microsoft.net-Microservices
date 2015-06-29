@@ -95,7 +95,7 @@ namespace CocktailService
         protected void Application_Start(object sender, EventArgs e)
         {
             
-            var dataDir = HostingEnvironment.MapPath("~/App_Data");
+            var dataDir = Server.MapPath("~/App_Data");
             try
             {
                 var stream = File.OpenRead(dataDir + "\\cocktails.xml");
